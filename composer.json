@@ -8,7 +8,13 @@
     { "name": "Doug Dobrzynski", "email": "ddobrzynski@pmmimediagroup.com" }
   ],
   "bin": [
-    "d8d-party"
+    "d8d-party",
+    "docker/dbackupdb",
+    "docker/dbash",
+    "docker/ddrupal",
+    "docker/ddrush",
+    "docker/djs",
+    "docker/dsass"
   ],
   "require": {
     "drush/drush": "^8.1.0"
