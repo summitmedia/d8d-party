@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+path=$(dirname "$0")
+source ${path}/base.sh
+
+
+# Use the Drupal Console installed by Composer.
+drupal="vendor/bin/drupal --root=${DRUPAL_ROOT} $@"
+
+docker-compose exec --user www-data ${SITE_CODE}web bash -ci "$drupal"

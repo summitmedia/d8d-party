@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+path=$(dirname "$0")
+source ${path}/base.sh
+
+# Use the Drush installed by Composer.
+drush="vendor/bin/drush -r ${DRUPAL_ROOT} $@"
+
+
+docker-compose exec --user root ${SITE_CODE}web bash -ci "$drush"

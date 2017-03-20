@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -e
+path=$(dirname "$0")
+source ${path}/base.sh
+
+./build/scripts/docker/ddrush sql-dump --gzip --result-file=../build/ref/${SITE_CODE}_$(date +%Y%m%d\-%H%M).sql
