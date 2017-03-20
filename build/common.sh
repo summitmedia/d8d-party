@@ -1,14 +1,5 @@
 #!/bin/bash
 
-set -e
-path="$(dirname "$0")"
-pushd $path/..
-base="$(pwd)";
-
-echo "$base"
-
-drupal_base="$base/html"
-
 while getopts ":r:d:" opt; do
   case $opt in
     r)
