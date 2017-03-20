@@ -1,5 +1,5 @@
 {
-  "name": "summitmedia/d8-docker-party",
+  "name": "summitmedia/d8d-party",
   "description": "Provides helper scripts for installing Drupal and apply changes as well as working with Docker.",
   "license": "GPL-2.0+",
   "minimum-stability": "stable",
