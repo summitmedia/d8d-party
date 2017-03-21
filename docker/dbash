@@ -2,6 +2,6 @@
 
 set -e
 path=$(dirname "$0")
-source ${path}/base.sh
+source ${path}/d8d-base.sh
 
 docker-compose exec --user root ${SITE_CODE}web bash
