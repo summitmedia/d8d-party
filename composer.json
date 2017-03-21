@@ -9,6 +9,7 @@
   ],
   "bin": [
     "d8d-party",
+    "d8d-party.env",
     "docker/d8d-base.sh",
     "docker/dbackupdb",
     "docker/dbash",
