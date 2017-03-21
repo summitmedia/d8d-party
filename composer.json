@@ -13,6 +13,7 @@
     "docker/d8d-base.sh",
     "docker/dbackupdb",
     "docker/dbash",
+    "docker/dcomposer",
     "docker/ddrupal",
     "docker/ddrush",
     "docker/djs",
