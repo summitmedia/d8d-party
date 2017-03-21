@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 dockercompose="-f docker-compose.yml -f docker-compose.override.yml -f docker-compose.osx.yml"
 

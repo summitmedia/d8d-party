@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 line=$(head -n 1 /etc/hosts)
 line2=$(echo $line | awk '{print $2}')
