@@ -7,4 +7,4 @@ source ${path}/d8d-base.sh
 # Use the Drush installed by Composer.
 drush="vendor/bin/drush -r ${DRUPAL_ROOT} $@"
 
-docker-compose exec --user root ${SITE_CODE}web bash -ci "$drush"
+docker-compose exec --user root ${WEB_SERVICE} bash -ci "$drush"

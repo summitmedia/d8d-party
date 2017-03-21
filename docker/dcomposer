@@ -4,4 +4,4 @@ set -e
 path=$(dirname "$0")
 source ${path}/d8d-base.sh
 
-docker-compose exec --user root ${SITE_CODE}web bash -ci "composer $@"
+docker-compose exec --user root ${WEB_SERVICE} bash -ci "composer $@"
