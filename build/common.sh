@@ -33,6 +33,13 @@ done
 # Use the Drush installed by Composer.
 drush="$base/vendor/bin/drush -r $drupal_base"
 
+# Set Drush clear cache command.
+if [ "$DRUPAL_VERSION" = 8 ]; then
+  drush_cache_clear='cr'
+else
+  drush_cache_clear='cc'
+fi
+
 # Set the Drupal Console installed by Composer.
 drupal="$base/vendor/bin/drupal --root=$drupal_base $@"
 
