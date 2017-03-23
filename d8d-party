@@ -64,7 +64,6 @@ elif [ "$SITE_ENVIRONMENT" = "dev" ]; then
   webcontainer=${SITE_CODE}_dev_web
 fi
 
-
 if [ "$OSX" = 1 ]; then
   dockercompose="-f docker-compose.yml -f docker-compose.override.yml -f docker-compose.osx.yml"
 fi
