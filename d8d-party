@@ -10,9 +10,12 @@ d8d_party_base="./vendor/summitmedia/d8d-party"
 if [[ -f "$base/.env" ]]; then
   echo "Using Custom ENV file at $base/.env"
   source "$base/.env"
-else
+elif [[ -f "$base/env.dist" ]]; then
   echo "Using Distributed ENV file at $base/env.dist"
   source "$base/env.dist"
+else
+  echo "Using D8D Party ENV file at $d8d_party_base/d8d-party.env"
+  source "$d8d_party_base/d8d-party.env"
 fi
 
 # Set defaults

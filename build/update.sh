@@ -16,7 +16,7 @@ echo "Initial Update so updated modules can work.";
 $drush updb -y;
 # Rebuild cache so recently added modules are found.
 echo "Clearing cache.";
-$drush $drush_cache_clear
+$drush $drush_cache_clear all
 echo "Enabling modules.";
 $drush en $(echo $DROPSHIP_SEEDS | tr ':' ' ') -y
 echo "Enabling themes.";
@@ -35,7 +35,7 @@ fi
 echo "Importing Features"
 $drush fra -y
 echo "Clearing caches one last time.";
-$drush $drush_cache_clear
+$drush $drush_cache_clear all
 
 chmod -R +w "$base/cnf"
 chmod -R +w "$DRUPAL_ROOT/sites/default"

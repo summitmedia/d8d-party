@@ -3,6 +3,15 @@
 base="$(pwd)";
 echo "base: $base"
 
+# Get environment variables again to be safe.
+if [[ -f "$base/.env" ]]; then
+  source "$base/.env"
+elif [[ -f "$base/env.dist" ]]; then
+  source "$base/env.dist"
+else
+  source "$d8d_party_base/d8d-party.env"
+fi
+
 while getopts ":r:d:" opt; do
   case $opt in
     r)
