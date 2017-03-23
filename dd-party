@@ -4,7 +4,7 @@ set -e
 path="$(dirname "$0")"
 pushd ${path}/../..
 base="$(pwd)";
-d8d_party_base="./vendor/summitmedia/d8d-party"
+dd_party_base="./vendor/summitmedia/dd-party"
 
 # Get environment variables.
 if [[ -f "$base/.env" ]]; then
@@ -14,8 +14,8 @@ elif [[ -f "$base/env.dist" ]]; then
   echo "Using Distributed ENV file at $base/env.dist"
   source "$base/env.dist"
 else
-  echo "Using D8D Party ENV file at $d8d_party_base/d8d-party.env"
-  source "$d8d_party_base/d8d-party.env"
+  echo "Using dd Party ENV file at $dd_party_base/dd-party.env"
+  source "$dd_party_base/dd-party.env"
 fi
 
 # Set defaults
@@ -102,14 +102,14 @@ fi
 
 if [ "${install}" = "1" ]; then
   echo 'Initiating Drupal install.'
-  docker exec -it ${webcontainer}  ${d8d_party_base}/build/install.sh
+  docker exec -it ${webcontainer}  ${dd_party_base}/build/install.sh
   if [ "$?" != "0" ]; then
     echo 'Uh oh. The Drupal install failed. You should check the output above for errors.'
     exit 1
   fi
 else
   echo 'Initiating updates.'
-  docker exec -it ${webcontainer} ${d8d_party_base}/build/update.sh
+  docker exec -it ${webcontainer} ${dd_party_base}/build/update.sh
 fi
 
 if [ "$?" = "0" ]; then

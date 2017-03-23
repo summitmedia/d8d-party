@@ -12,6 +12,6 @@ elif [[ -f "$base/env.dist" ]]; then
   echo "Using Project's Distributed ENV file at $base/env.dist"
   source "$base/env.dist"
 else
-  echo "Using D8D Party's ENV file at d8d-party.env"
-  source "d8d-party.env"
+  echo "Using dd Party's ENV file at dd-party.env"
+  source "dd-party.env"
 fi

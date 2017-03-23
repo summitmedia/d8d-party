@@ -9,7 +9,7 @@ if [[ -f "$base/.env" ]]; then
 elif [[ -f "$base/env.dist" ]]; then
   source "$base/env.dist"
 else
-  source "$d8d_party_base/d8d-party.env"
+  source "$dd_party_base/dd-party.env"
 fi
 
 while getopts ":r:d:" opt; do
@@ -76,7 +76,7 @@ fi
 if [[ -e "$base/composer.json" ]] && which composer > /dev/null; then
   # Then run Composer
   echo "Installing dependencies with Composer.";
-  composer install
+  composer install --optimize-autoloader
 fi
 
 echo 'Setting correct group on webroot.'

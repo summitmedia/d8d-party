@@ -2,7 +2,7 @@
 
 set -e
 path=$(dirname "$0")
-source ${path}/d8d-base.sh
+source ${path}/dd-base.sh
 
 # Use the Drupal Console installed by Composer.
 drupal="vendor/bin/drupal --root=${DRUPAL_ROOT} $@"

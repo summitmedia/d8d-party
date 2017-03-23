@@ -2,6 +2,6 @@
 
 set -e
 path=$(dirname "$0")
-source ${path}/d8d-base.sh
+source ${path}/dd-base.sh
 
 ${path}/ddrush sql-dump --gzip --result-file=../build/ref/${SITE_CODE}_$(date +%Y%m%d\-%H%M).sql
