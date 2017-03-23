@@ -1,6 +1,6 @@
 # DD Party
 
-DD stands for Drupal Docker. dd Party provides scripts to help
+DD stands for Drupal Docker. DD Party provides scripts to help
 with building the site and deploying changes as well as helper
 scripts to run commands inside Docker containers.
 
