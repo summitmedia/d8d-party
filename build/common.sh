@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 
+base="$(pwd)";
+echo "base: $base"
+
 while getopts ":r:d:" opt; do
   case $opt in
     r)
       # Drupal Root Directory
-      drupal_base="$base/$OPTARG";
+      ${DRUPAL_ROOT}="$DRUPAL_ROOT/$OPTARG";
       ;;
     d)
       # Drush Command
@@ -31,10 +34,19 @@ Usage: install.sh [-r DRUPAL_ROOT] [-d \"DRUSH COMMAND\"]
 done
 
 # Use the Drush installed by Composer.
-drush="$base/vendor/bin/drush -r $drupal_base"
+drush="$base/vendor/bin/drush -r $DRUPAL_ROOT"
+
+echo "drush: $drush"
+
+# Set Drush clear cache command.
+if [ "$DRUPAL_VERSION" = 8 ]; then
+  drush_cache_clear='cr'
+else
+  drush_cache_clear='cc'
+fi
 
 # Set the Drupal Console installed by Composer.
-drupal="$base/vendor/bin/drupal --root=$drupal_base $@"
+drupal="$base/vendor/bin/drupal --root=$DRUPAL_ROOT $@"
 
 if [[ -f "$base/.env" ]]; then
   echo "Using Custom ENV file at $base/.env"
@@ -50,3 +62,6 @@ if [[ -e "$base/composer.json" ]] && which composer > /dev/null; then
   echo "Installing dependencies with Composer.";
   composer install
 fi
+
+echo 'Setting correct group on webroot.'
+chgrp -R www-data ${DRUPAL_ROOT}

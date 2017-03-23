@@ -5,7 +5,9 @@ path="$(dirname "$0")"
 source "$path/common.sh"
 
 # Change to the Drupal Directory Just In Case
-pushd "$drupal_base"
+pushd "$DRUPAL_ROOT"
+echo "drupal base: $DRUPAL_ROOT"
+echo "drush in update.sh: $drush"
 
 # This was added because of upgrades like Rules 2.8 to 2.9 and Feeds alpha-9 to beta-1 where
 # new code and database tables are added and running other code will cause white screen until
@@ -34,4 +36,4 @@ echo "Clearing caches one last time.";
 $drush cr
 
 chmod -R +w "$base/cnf"
-chmod -R +w "$base/html/sites/default"
+chmod -R +w "$DRUPAL_ROOT/sites/default"

@@ -4,7 +4,7 @@ set -e
 path="$(dirname "$0")"
 pushd ${path}/../..
 base="$(pwd)";
-drupal_base="$base/html"
+d8d_party_base="./vendor/summitmedia/d8d-party"
 
 # Get environment variables.
 if [[ -f "$base/.env" ]]; then
@@ -87,8 +87,9 @@ if [ "$build" = "1" ]; then
   echo 'Starting and building Docker containters.'
   docker-compose ${dockercompose} up -d --build
   docker exec -it ${webcontainer} service rsyslog start
-  docker exec -it ${webcontainer} ./build/sendmail_config.sh
+  docker exec -it ${webcontainer} ${d8d_party_base}/build/sendmail_config.sh
   docker exec -it ${webcontainer} service sendmail start
+  docker exec -it ${webcontainer}  ${d8d_party_base}/build/xdebug_config.sh
   docker exec -it ${webcontainer} service apache2 graceful
 else
   echo 'Starting Docker containers.'
@@ -102,14 +103,14 @@ fi
 
 if [ "${install}" = "1" ]; then
   echo 'Initiating Drupal install.'
-  docker exec -it ${webcontainer} ./build/install.sh
+  docker exec -it ${webcontainer}  ${d8d_party_base}/build/install.sh
   if [ "$?" != "0" ]; then
     echo 'Uh oh. The Drupal install failed. You should check the output above for errors.'
     exit 1
   fi
 else
   echo 'Initiating updates.'
-  docker exec -it ${webcontainer} ./build/update.sh
+  docker exec -it ${webcontainer} ${d8d_party_base}/build/update.sh
 fi
 
 if [ "$?" = "0" ]; then
