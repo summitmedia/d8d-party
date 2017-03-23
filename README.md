@@ -1,6 +1,6 @@
-# D8D Party
+# DD Party
 
-D8D stands for Drupal 8 Docker. D8D Party provides scripts to help 
+dd stands for Drupal 8 Docker. dd Party provides scripts to help 
 with building the site and deploying changes as well as helper 
 scripts to run commands inside Docker containers.
 
@@ -22,12 +22,12 @@ scripts to run commands inside Docker containers.
   site theme. Default: `/var/www/html/themes/contrib/bootstrap`
   
 * To (re)build Docker containers and apply changes, run 
-`vendor/bin/d8d-party -b`
+`vendor/bin/dd-party -b`
 
-* To install Drupal and apply changes, run `vendor/bin/d8d-party -i`.
+* To install Drupal and apply changes, run `vendor/bin/dd-party -i`.
 
 * To (re)build Docker containers, install Drupal and apply changes, 
-run `vendor/bin/d8d-party -b`
+run `vendor/bin/dd-party -b`
 
 ## Direnv
 
@@ -44,7 +44,7 @@ example, `ddrush cr` can be run instead of having to run
 
 ## The Build and Deployment Scripts
 
-`vendor/bin/d8d-party` builds and links the necessary Docker 
+`vendor/bin/dd-party` builds and links the necessary Docker 
 containers (using Docker Compose v3).
 
 Then, Composer installs all the necessary packages.
@@ -60,25 +60,25 @@ passes off to `build/update.sh`, which is the reusable and non-
 destructive script for applying updates in code to a Drupal site 
 with existing content.
 
-Use `vendor/bin/d8d-party -b -i` to create a brand new environment. 
+Use `vendor/bin/dd-party -b -i` to create a brand new environment. 
 Use this script to simulate what would happen when deploying from a 
 certain state like currently what is on production.
 
-Use `vendor/bin/d8d-party` to *ACTUALLY* deploy changes onto an 
+Use `vendor/bin/dd-party` to *ACTUALLY* deploy changes onto an 
 environment like production or staging.
 
 This is the tool can be used when testing to see if changes have 
 been persisted in such that collaborators can use them and is a 
-great alternative to just running `vendor/bin/d8d-party -i` over 
+great alternative to just running `vendor/bin/dd-party -i` over 
 and over:
 
 ```bash
-vendor/bin/d8d-party -i                      # get a baseline
+vendor/bin/dd-party -i                      # get a baseline
 ddrush sql-dump > base.sql                   # save your baseline
 # ... do a whole bunch of Drupal hacking ...
 ddrush sql-dump > tmp.sql                    # save your intended state
 ddrush -y sql-drop && drush sqlc < base.sql  # restore baseline state
-vendor/bin/d8d-party                         # apply changes to baseline
+vendor/bin/dd-party                         # apply changes to baseline
 ```
 
 Note: The above assumes the use of Direnv.
