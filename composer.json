@@ -10,6 +10,8 @@
   "bin": [
     "d8d-party",
     "d8d-party.env",
+    "build/sendmail-config",
+    "build/xdebug-config",
     "docker/d8d-base.sh",
     "docker/dbackupdb",
     "docker/dbash",

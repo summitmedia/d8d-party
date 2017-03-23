@@ -16,24 +16,26 @@ echo "Initial Update so updated modules can work.";
 $drush updb -y;
 # Rebuild cache so recently added modules are found.
 echo "Clearing cache.";
-$drush cr
+$drush $drush_cache_clear
 echo "Enabling modules.";
 $drush en $(echo $DROPSHIP_SEEDS | tr ':' ' ') -y
 echo "Enabling themes.";
 $drush en $DEFAULT_THEME $ADMIN_THEME -y
 echo "Clearing drush cache."
-$drush cr drush
-echo "Reverting configuration."
-$drush cim sync --partial -y
-$drush cim overrides --partial -y
-if [ "$SITE_ENVIRONMENT" = "dev" ]; then
-  echo "Importing dev configuration."
-  $drush cim dev --partial -y
+$drush $drush_cache_clear drush
+if [ "$DRUPAL_VERSION" = 8 ]; then
+  echo "Reverting configuration."
+  $drush cim sync --partial -y
+  $drush cim overrides --partial -y
+  if [ "$SITE_ENVIRONMENT" = "dev" ]; then
+    echo "Importing dev configuration."
+    $drush cim dev --partial -y
+  fi
 fi
 echo "Importing Features"
-$drush fia -y
+$drush fra -y
 echo "Clearing caches one last time.";
-$drush cr
+$drush $drush_cache_clear
 
 chmod -R +w "$base/cnf"
 chmod -R +w "$DRUPAL_ROOT/sites/default"
