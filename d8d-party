@@ -90,9 +90,6 @@ if [ "$build" = "1" ]; then
   echo 'Starting and building Docker containters.'
   docker-compose ${dockercompose} up -d --build
   docker exec -it ${webcontainer} service rsyslog start
-  docker exec -it ${webcontainer} ${d8d_party_base}/build/sendmail_config.sh
-  docker exec -it ${webcontainer} service sendmail start
-  docker exec -it ${webcontainer}  ${d8d_party_base}/build/xdebug_config.sh
   docker exec -it ${webcontainer} service apache2 graceful
 else
   echo 'Starting Docker containers.'
