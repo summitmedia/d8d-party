@@ -26,8 +26,14 @@ $drush $drush_cache_clear drush
 if [ "$DRUPAL_VERSION" = 8 ]; then
   echo "Reverting configuration."
   $drush cim sync --partial -y
-  $drush cim overrides --partial -y
-  if [ "$SITE_ENVIRONMENT" = "dev" ]; then
+  if [ -e "$base/config/drupal/overrides" ]; then
+    $drush cim overrides --partial -y
+  fi
+  if [ "$SITE_ENVIRONMENT" = "test" ] && [ -e "$base/config/drupal/test" ]; then
+    echo "Importing test configuration."
+    $drush cim test --partial -y
+  fi
+  if [ "$SITE_ENVIRONMENT" = "dev" ] && [ -e "$base/config/drupal/dev" ]; then
     echo "Importing dev configuration."
     $drush cim dev --partial -y
   fi
