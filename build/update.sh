@@ -26,7 +26,12 @@ $drush $drush_cache_clear drush
 if [ "$DRUPAL_VERSION" = 8 ]; then
   echo "Reverting configuration."
   $drush cim sync --partial -y
+  if [ -e "$base/config/drupal/panels_pages" ]; then
+    echo "Importing panels pages configuration."
+    $drush cim panels_pages --partial -y
+  fi
   if [ -e "$base/config/drupal/overrides" ]; then
+    echo "Importing overrides configuration."
     $drush cim overrides --partial -y
   fi
   if [ "$SITE_ENVIRONMENT" = "test" ] && [ -e "$base/config/drupal/test" ]; then
