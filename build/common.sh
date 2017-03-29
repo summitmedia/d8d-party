@@ -45,8 +45,6 @@ done
 # Use the Drush installed by Composer.
 drush="$base/vendor/bin/drush -r $DRUPAL_ROOT"
 
-echo "drush: $drush"
-
 # Set Drush clear cache command.
 if [ "$DRUPAL_VERSION" = 8 ]; then
   drush_cache_clear='cr'

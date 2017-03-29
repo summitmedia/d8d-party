@@ -88,8 +88,10 @@ fi
 if [ "$build" = "1" ]; then
   echo 'Starting and building Docker containters.'
   docker-compose ${dockercompose} up -d --build
-  docker exec -it ${webcontainer} service rsyslog start
-  docker exec -it ${webcontainer} service apache2 graceful
+  docker exec -it ${webcontainer} /bin/bash -c "service rsyslog start"
+  docker exec -it ${webcontainer} /bin/bash -c "service apache2 graceful"
+  docker exec -it ${webcontainer} /bin/bash -c "${dd_party_base}/build/sendmail-config"
+  docker exec -it ${webcontainer} /bin/bash -c "service sendmail restart"
 else
   echo 'Starting Docker containers.'
   docker-compose ${dockercompose} up -d
@@ -102,14 +104,14 @@ fi
 
 if [ "${install}" = "1" ]; then
   echo 'Initiating Drupal install.'
-  docker exec -it ${webcontainer}  ${dd_party_base}/build/install.sh
+  docker exec -it ${webcontainer} /bin/bash -c "${dd_party_base}/build/install.sh"
   if [ "$?" != "0" ]; then
     echo 'Uh oh. The Drupal install failed. You should check the output above for errors.'
     exit 1
   fi
 else
   echo 'Initiating updates.'
-  docker exec -it ${webcontainer} ${dd_party_base}/build/update.sh
+  docker exec -it ${webcontainer} /bin/bash -c "${dd_party_base}/build/update.sh"
 fi
 
 if [ "$?" = "0" ]; then
