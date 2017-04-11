@@ -27,7 +27,7 @@ scripts to run commands inside Docker containers.
 * To install Drupal and apply changes, run `vendor/bin/dd-party -i`.
 
 * To (re)build Docker containers, install Drupal and apply changes,
-run `vendor/bin/dd-party -b`
+run `vendor/bin/dd-party -b -i`
 
 ## Direnv
 
