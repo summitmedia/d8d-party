@@ -22,8 +22,6 @@ fi
 build=
 install=
 dockercompose="-f docker-compose.yml -f docker-compose.prod.yml"
-# Get the container ID of the web service
-CONTAINER=$(docker-compose ps -q ${WEB_SERVICE})
 
 # Usage info
 usage() {
@@ -95,6 +93,9 @@ else
   echo 'Starting Docker containers.'
   docker-compose ${dockercompose} up -d
 fi
+
+# Get the container ID of the web service
+CONTAINER=$(docker-compose ps -q ${WEB_SERVICE})
 
 if [ "$?" != "0" ]; then
   echo 'Uh oh. The Docker build failed. You should check the output above for errors.'
