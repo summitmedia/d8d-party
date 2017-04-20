@@ -9,6 +9,14 @@ pushd "$DRUPAL_ROOT"
 echo "drupal base: $DRUPAL_ROOT"
 echo "drush in update.sh: $drush"
 
+modules_enabled="$($drush pm-list --pipe --type=module --status=enabled --no-core)"
+if [[ ${modules_enabled} == *"features"* ]]; then
+  features_enabled=1
+else
+  features_enabled=0
+fi
+echo "features enabled: $features_enabled"
+
 # This was added because of upgrades like Rules 2.8 to 2.9 and Feeds alpha-9 to beta-1 where
 # new code and database tables are added and running other code will cause white screen until
 # the updates are run.
@@ -43,8 +51,10 @@ if [ "$DRUPAL_VERSION" = 8 ]; then
     $drush cim dev --partial -y
   fi
 fi
-echo "Importing Features"
-$drush fra -y
+if [ "$features_enabled" = 1 ]; then
+  echo "Importing Features"
+  $drush fra -y
+fi
 echo "Clearing caches one last time.";
 $drush $drush_cache_clear all
 
