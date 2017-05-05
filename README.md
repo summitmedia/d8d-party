@@ -86,6 +86,19 @@ deleting a field whose fundamental config is changing. Or, perhaps
 changes were made through the UI and now it is not working as
 expected. This is a great time to fix these issues.
 
+
+### Config Import and Features Reversion Order
+
+The importing of configuration and reverting of features happens in
+the following order (if the directories exist):
+
+1. `config/drupal/sync`
+2. `config/drupal/panels_pages`
+3. `config/drupal/test` (if test environment) / `config/drupal/dev`
+(if dev environment).
+4. Features reversion.
+5. `config/drupal/overrides`
+
 ## Helper Scripts
 
 Helper scripts are provided to make performing common tasks inside
