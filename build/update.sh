@@ -38,10 +38,6 @@ if [ "$DRUPAL_VERSION" = 8 ]; then
     echo "Importing panels pages configuration."
     $drush cim panels_pages --partial -y
   fi
-  if [ -e "$base/config/drupal/overrides" ]; then
-    echo "Importing overrides configuration."
-    $drush cim overrides --partial -y
-  fi
   if [ "$SITE_ENVIRONMENT" = "test" ] && [ -e "$base/config/drupal/test" ]; then
     echo "Importing test configuration."
     $drush cim test --partial -y
@@ -54,6 +50,10 @@ fi
 if [ "$features_enabled" = 1 ]; then
   echo "Importing Features"
   $drush fra -y
+fi
+if [ -e "$base/config/drupal/overrides" ]; then
+  echo "Importing overrides configuration."
+  $drush cim overrides --partial -y
 fi
 echo "Clearing caches one last time.";
 $drush $drush_cache_clear all
