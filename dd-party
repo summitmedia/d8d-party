@@ -108,6 +108,9 @@ if [ "$?" != "0" ]; then
   exit 1
 fi
 
+echo 'Making dd-party build scripts executable.'
+docker exec -it ${CONTAINER} /bin/bash -c "chmod 755 ${dd_party_base}/build/*"
+
 if [ "${install}" = "1" ]; then
   echo 'Initiating Drupal install.'
   docker exec -it ${CONTAINER} /bin/bash -c "${dd_party_base}/build/install.sh"
