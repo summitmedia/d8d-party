@@ -74,7 +74,7 @@ fi
 if [[ -e "$base/composer.json" ]] && which composer > /dev/null; then
   # Then run Composer
   echo "Installing dependencies with Composer.";
-  composer install --optimize-autoloader
+  composer install --optimize-autoloader --prefer-dist
 fi
 
 echo 'Setting correct group on webroot.'
