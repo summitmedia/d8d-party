@@ -77,5 +77,19 @@ if [[ -e "$base/composer.json" ]] && which composer > /dev/null; then
   composer install --optimize-autoloader --prefer-dist
 fi
 
+# If package.json for default theme exists and the npm command exists
+# install packages with npm and bower.
+if [[ -e "$theme_base/package.json" ]] && which npm > /dev/null; then
+  # Then run npm install
+  echo "Installing packages for custom theme with npm.";
+  npm install --prefix $theme_base
+  # If bower.json for pmmi_bootstrap exists and the bower command exists.
+  if [[ -e "$theme_base/bower.json" ]]; then
+    # Then run bower install
+    echo "Installing packages for custom theme with bower.";
+    npm run bower --prefix $theme_base
+  fi
+fi
+
 echo 'Setting correct group on webroot.'
 chgrp -R www-data ${DRUPAL_ROOT}
