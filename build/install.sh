@@ -17,7 +17,7 @@ elif [ -e "${sqlfile}" ]; then
   echo "...from reference database."
   ${drush} sql-drop -y
   ${drush} sqlc < ${sqlfile}
-elif [ -e "$DRUPAL_ROOT/profiles/contrib/config_installer" ]; then
+elif [ -e "$drupal_root/profiles/contrib/config_installer" ]; then
   echo "...from existing config with config installer profile.";
   ${drush} sql-drop --yes
   ${drush} si config_installer --yes \

@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 base="$(pwd)";
-echo "base: $base"
 
 # Get environment variables again to be safe.
 if [[ -f "$base/.env" ]]; then
@@ -12,11 +11,15 @@ else
   source "$dd_party_base/dd-party.env"
 fi
 
+# Set variables for Drupal related directories.
+drupal_root=${DRUPAL_ROOT}
+theme_base=${THEME_ROOT}
+
 while getopts ":r:d:" opt; do
   case $opt in
     r)
       # Drupal Root Directory
-      ${DRUPAL_ROOT}="$DRUPAL_ROOT/$OPTARG";
+      $drupal_root="$drupal_root/$OPTARG";
       ;;
     d)
       # Drush Command
@@ -43,7 +46,7 @@ Usage: install.sh [-r DRUPAL_ROOT] [-d \"DRUSH COMMAND\"]
 done
 
 # Use the Drush installed by Composer.
-drush="$base/vendor/bin/drush -r $DRUPAL_ROOT"
+drush="$base/vendor/bin/drush -r $drupal_root"
 
 # Set Drush clear cache command.
 if [ "$DRUPAL_VERSION" = 8 ]; then
@@ -60,7 +63,7 @@ else
 fi
 
 # Set the Drupal Console installed by Composer.
-drupal="$base/vendor/bin/drupal --root=$DRUPAL_ROOT $@"
+drupal="$base/vendor/bin/drupal --root=$drupal_root $@"
 
 if [[ -f "$base/.env" ]]; then
   echo "Using Custom ENV file at $base/.env"
@@ -92,4 +95,4 @@ if [[ -e "$theme_base/package.json" ]] && which npm > /dev/null; then
 fi
 
 echo 'Setting correct group on webroot.'
-chgrp -R www-data ${DRUPAL_ROOT}
+chgrp -R www-data $drupal_root

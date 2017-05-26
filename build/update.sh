@@ -5,8 +5,8 @@ path="$(dirname "$0")"
 source "$path/common.sh"
 
 # Change to the Drupal Directory Just In Case
-pushd "$DRUPAL_ROOT"
-echo "drupal base: $DRUPAL_ROOT"
+pushd "$drupal_root"
+echo "drupal base: $drupal_root"
 echo "drush in update.sh: $drush"
 
 modules_enabled="$($drush pm-list --pipe --type=module --status=enabled --no-core)"
@@ -59,4 +59,4 @@ echo "Clearing caches one last time.";
 $drush $drush_cache_clear all
 
 chmod -R +w "$base/cnf"
-chmod -R +w "$DRUPAL_ROOT/sites/default"
+chmod -R +w "$drupal_root/sites/default"
