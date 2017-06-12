@@ -21,7 +21,11 @@ echo "features enabled: $features_enabled"
 # new code and database tables are added and running other code will cause white screen until
 # the updates are run.
 echo "Initial Update so updated modules can work.";
-$drush updb --entity-updates -y;
+$drush updb -y;
+if [ "$DRUPAL_VERSION" = 8 ]; then
+  echo "Updating entities."
+  $drush entup -y
+fi
 # Rebuild cache so recently added modules are found.
 echo "Clearing cache.";
 $drush $drush_cache_clear all
