@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 base="$(pwd)";
-echo "base: $base"
 
 # Get environment variables again to be safe.
 if [[ -f "$base/.env" ]]; then
@@ -12,11 +11,15 @@ else
   source "$dd_party_base/dd-party.env"
 fi
 
+# Set variables for Drupal related directories.
+drupal_root=${DRUPAL_ROOT}
+theme_base=${THEME_ROOT}
+
 while getopts ":r:d:" opt; do
   case $opt in
     r)
       # Drupal Root Directory
-      ${DRUPAL_ROOT}="$DRUPAL_ROOT/$OPTARG";
+      $drupal_root="$drupal_root/$OPTARG";
       ;;
     d)
       # Drush Command
@@ -43,7 +46,7 @@ Usage: install.sh [-r DRUPAL_ROOT] [-d \"DRUSH COMMAND\"]
 done
 
 # Use the Drush installed by Composer.
-drush="$base/vendor/bin/drush -r $DRUPAL_ROOT"
+drush="$base/vendor/bin/drush -r $drupal_root"
 
 # Set Drush clear cache command.
 if [ "$DRUPAL_VERSION" = 8 ]; then
@@ -53,13 +56,27 @@ else
 fi
 
 # Set the Drupal Console installed by Composer.
-drupal="$base/vendor/bin/drupal --root=$DRUPAL_ROOT $@"
+drupal="$base/vendor/bin/drupal --root=$drupal_root $@"
 
 # If Composer.json exists and the composer command.
 if [[ -e "$base/composer.json" ]] && which composer > /dev/null; then
   # Then run Composer
   echo "Installing dependencies with Composer.";
-  composer install --optimize-autoloader
+  composer install --optimize-autoloader --prefer-dist
+fi
+
+# If package.json for default theme exists and the npm command exists
+# install packages with npm and bower.
+if [[ -e "$theme_base/package.json" ]] && which npm > /dev/null; then
+  # Then run npm install
+  echo "Installing packages for custom theme with npm.";
+  npm install --prefix $theme_base
+  # If bower.json for pmmi_bootstrap exists and the bower command exists.
+  if [[ -e "$theme_base/bower.json" ]]; then
+    # Then run bower install
+    echo "Installing packages for custom theme with bower.";
+    npm run bower --prefix $theme_base
+  fi
 fi
 
 echo 'Setting correct group on webroot.'

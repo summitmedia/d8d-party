@@ -5,6 +5,6 @@ path=$(dirname "$0")
 source ${path}/dd-base.sh
 
 # Use the Drush installed by Composer.
-drush="vendor/bin/drush -r ${DRUPAL_ROOT} $@"
+drush="vendor/bin/drush -r $drupal_root $@"
 
 docker-compose exec --user root ${WEB_SERVICE} bash -ci "$drush"
