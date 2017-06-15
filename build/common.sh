@@ -52,23 +52,8 @@ else
   drush_cache_clear='cc'
 fi
 
-# Set Drush clear cache command.
-if [ "$DRUPAL_VERSION" = 8 ]; then
-  drush_cache_clear='cr'
-else
-  drush_cache_clear='cc'
-fi
-
 # Set the Drupal Console installed by Composer.
 drupal="$base/vendor/bin/drupal --root=$DRUPAL_ROOT $@"
-
-if [[ -f "$base/.env" ]]; then
-  echo "Using Custom ENV file at $base/.env"
-  source "$base/.env"
-else
-  echo "Using Distributed ENV file at $base/env.dist"
-  source "$base/env.dist"
-fi
 
 # If Composer.json exists and the composer command.
 if [[ -e "$base/composer.json" ]] && which composer > /dev/null; then
@@ -79,3 +64,9 @@ fi
 
 echo 'Setting correct group on webroot.'
 chgrp -R www-data ${DRUPAL_ROOT}
+
+if [ "$SITE_ENVIRONMENT" = "prod" ]; then
+  echo 'Ensuring hosts entry exists for sendmail to work.'
+  $base/vendor/bin/sendmail-config
+  service sendmail restart
+fi
