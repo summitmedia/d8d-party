@@ -21,12 +21,15 @@ scripts to run commands inside Docker containers.
   * `THEME_ROOT`: The path (in the web container) to the default
   site theme. Default: `/var/www/html/themes/contrib/bootstrap`
   
+* To start Docker containers and apply changes, run
+`vendor/bin/dd-party`
+
 * To (re)build Docker containers and apply changes, run
 `vendor/bin/dd-party -b`
 
 * To install Drupal and apply changes, run `vendor/bin/dd-party -i`.
 
-* To (re)build Docker containers, install Drupal and apply changes,
+* To (re)build Docker containers, install Drupal, and apply changes,
 run `vendor/bin/dd-party -b -i`
 
 ## Direnv
