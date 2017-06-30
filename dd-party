@@ -119,6 +119,10 @@ if [ "${install}" = "1" ]; then
     exit 1
   fi
 else
+  if [ "$SITE_ENVIRONMENT" = "prod" ]; then
+    echo 'Backing up database.'
+    ${dd_party_base/docker/dbackupdb}
+  fi
   echo 'Initiating updates.'
   docker exec -it ${CONTAINER} /bin/bash -c "${dd_party_base}/build/update.sh"
 fi
