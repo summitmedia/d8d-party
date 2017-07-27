@@ -4,4 +4,4 @@ set -e
 path=$(dirname "$0")
 source ${path}/dd-base.sh
 
-${path}/ddrush sql-dump --gzip --result-file=../build/ref/${SITE_CODE}_$(date +%Y%m%d\-%H%M).sql
+${path}/ddrush sql-dump --gzip --structure-tables-list=cache,cache_*,history,search_*,sessions,watchdog --result-file=../build/ref/${SITE_CODE}_$(date +%Y%m%d\-%H%M).sql
