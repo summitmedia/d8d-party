@@ -9,14 +9,6 @@ pushd "$drupal_root"
 echo "drupal base: $drupal_root"
 echo "drush in update.sh: $drush"
 
-modules_enabled="$($drush pm-list --pipe --type=module --status=enabled --no-core)"
-if [[ ${modules_enabled} == *"features"* ]]; then
-  features_enabled=1
-else
-  features_enabled=0
-fi
-echo "features enabled: $features_enabled"
-
 # This was added because of upgrades like Rules 2.8 to 2.9 and Feeds alpha-9 to beta-1 where
 # new code and database tables are added and running other code will cause white screen until
 # the updates are run.
@@ -37,27 +29,12 @@ echo "Clearing drush cache."
 $drush $drush_cache_clear drush
 if [ "$DRUPAL_VERSION" = 8 ]; then
   echo "Reverting configuration."
-  $drush cim sync --partial -y
-  if [ -e "$base/config/drupal/panels_pages" ]; then
-    echo "Importing panels pages configuration."
-    $drush cim panels_pages --partial -y
-  fi
-  if [ "$SITE_ENVIRONMENT" = "test" ] && [ -e "$base/config/drupal/test" ]; then
-    echo "Importing test configuration."
-    $drush cim test --partial -y
-  fi
-  if [ "$SITE_ENVIRONMENT" = "dev" ] && [ -e "$base/config/drupal/dev" ]; then
-    echo "Importing dev configuration."
-    $drush cim dev --partial -y
-  fi
+  $drush cim --partial -y
 fi
-if [ "$features_enabled" = 1 ]; then
+modules_enabled="$($drush pm-list --pipe --type=module --status=enabled --no-core)"
+if [[ ${modules_enabled} == *"features"* ]]; then
   echo "Importing Features"
   $drush fra -y
-fi
-if [ -e "$base/config/drupal/overrides" ]; then
-  echo "Importing overrides configuration."
-  $drush cim overrides --partial -y
 fi
 echo "Clearing caches one last time.";
 $drush $drush_cache_clear all

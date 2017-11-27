@@ -102,6 +102,27 @@ the following order (if the directories exist):
 4. Features reversion.
 5. `config/drupal/overrides`
 
+####Updates to configuration system usage.
+
+Since we start using config_split module to import/export configs, here is 
+a list what should be done before usage:
+1. All split settings for each environment should be in inactive status;
+2. For each environment in own `settings.php` file needs to be added 
+`$config['config_split.config_split.prod']['status'] = TRUE;`. <br>
+E.g. for local environment in file `settings.local.php` add following text:<br>
+`$config['config_split.config_split.dev_environment']['status'] = TRUE;`
+3. `Ignore` config split should be enabled for prod environment and disabled
+for local/dev/test environments.
+
+Usage:
+
+E.g. Split configuration for dev is exported to 
+   `config/drupal/dev` and imported with `drush csim dev_environment` 
+   if in settings.local.php
+   `$config['config_split.config_split.dev_environment']['status']` is set `TRUE`. 
+
+
+
 ## Helper Scripts
 
 Helper scripts are provided to make performing common tasks inside
