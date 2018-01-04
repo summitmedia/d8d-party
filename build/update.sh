@@ -31,8 +31,16 @@ if [ "$DRUPAL_VERSION" = 8 ]; then
   echo "Reverting configuration."
   $drush cim --partial -y
 fi
-modules_enabled="$($drush pm-list --pipe --type=module --status=enabled --no-core)"
-if [[ ${modules_enabled} == *"features"* ]]; then
+{
+  features_ignore_enabled_test="$($drush help fic)"
+  if [[ ${features_ignore_enabled_test} == *"Aliases: fic"* ]]; then
+    features_ignore_enabled=1
+  else
+    features_ignore_enabled=0
+  fi
+  echo "features ignore enabled: $features_ignore_enabled"
+} || {}
+if [ "$features_enabled" = 1 ]; then
   echo "Importing Features"
   $drush fra -y
 fi
