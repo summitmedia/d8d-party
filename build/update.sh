@@ -37,19 +37,7 @@ echo "Clearing drush cache."
 $drush $drush_cache_clear drush
 if [ "$DRUPAL_VERSION" = 8 ]; then
   echo "Reverting configuration."
-  $drush cim sync --partial -y
-  if [ -e "$base/config/drupal/panels_pages" ]; then
-    echo "Importing panels pages configuration."
-    $drush cim panels_pages --partial -y
-  fi
-  if [ "$SITE_ENVIRONMENT" = "test" ] && [ -e "$base/config/drupal/test" ]; then
-    echo "Importing test configuration."
-    $drush cim test --partial -y
-  fi
-  if [ "$SITE_ENVIRONMENT" = "dev" ] && [ -e "$base/config/drupal/dev" ]; then
-    echo "Importing dev configuration."
-    $drush cim dev --partial -y
-  fi
+  $drush cim --partial -y
 fi
 {
   features_ignore_enabled_test="$($drush help fic)"
