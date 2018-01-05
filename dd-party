@@ -85,16 +85,6 @@ fi
 if [ "$build" = "1" ]; then
   echo 'Starting and building Docker containters.'
   docker-compose ${dockercompose} up -d --build
-  # Get the container ID of the web service
-  CONTAINER=$(docker-compose ps -q ${WEB_SERVICE})
-  echo 'Starting rsyslog.'
-  docker exec -it ${CONTAINER} /bin/bash -c "service rsyslog start"
-  echo 'Restarting apache.'
-  docker exec -it ${CONTAINER} /bin/bash -c "service apache2 graceful"
-  echo 'Configuring sendmail.'
-  docker exec -it ${CONTAINER} /bin/bash -c "${dd_party_base}/build/sendmail-config"
-  echo 'Restarting sendmail.'
-  docker exec -it ${CONTAINER} /bin/bash -c "service sendmail restart"
 else
   echo 'Starting Docker containers.'
   docker-compose ${dockercompose} up -d
